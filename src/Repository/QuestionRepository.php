@@ -43,6 +43,7 @@ class QuestionRepository
         $questionEntity->setCreationDate($question['createdAt']);
         $questionEntity->setChoices($question['choices']);
         $this->dataManager->addNew($questionEntity);
+        return $questionEntity;
     }
 
 }

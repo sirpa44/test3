@@ -25,7 +25,7 @@ class JsonManager implements DataManagerInterface
      * @param array $parsedData
      * @return array
      */
-    public function QuestionsArray(array $parsedData): array
+    protected function QuestionsArray(array $parsedData): array
     {
         $questionsArray = [];
         foreach ($parsedData as $question) {

@@ -3,7 +3,9 @@
 namespace App\Adapter;
 
 
+use App\Entity\Question;
 use League\Csv\Reader;
+use League\Csv\Writer;
 
 class CsvManager implements DataManagerInterface
 {
@@ -37,7 +39,7 @@ class CsvManager implements DataManagerInterface
      * @param \Iterator $iterator
      * @return array
      */
-    public function QuestionsArray(\Iterator $iterator): array
+    protected function QuestionsArray(\Iterator $iterator): array
     {
         $questionsArray = [];
         foreach ($iterator as $question) {
@@ -52,5 +54,16 @@ class CsvManager implements DataManagerInterface
         return $questionsArray;
     }
 
-    public function
+    public function addNew(Question $questionEntity)
+    {
+        $csv = Writer::createFromPath($this->path, 'a');
+            $question = [
+                $questionEntity->getQuestion(),
+                $questionEntity->getCreationDate()
+            ];
+        foreach ($questionEntity->getChoices() as $choice) {
+            $question[] = $choice;
+        }
+        $csv->insertOne($question);
+    }
 }

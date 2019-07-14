@@ -58,12 +58,11 @@ class ApiController
      */
     public function createQuestion(Request $request): JsonResponse
     {
-
-        $content = json_decode($request->getContent(), true);
         try {
+            $content = json_decode($request->getContent(), true);
             $question = [
                 'question' => $content['text'],
-                'createAt' => $content['createdAt'],
+                'createdAt' => $content['createdAt'],
                 'choices' => $content['choices'][0],
             ];
             $response = $this->questionRepository->createOne($question);
