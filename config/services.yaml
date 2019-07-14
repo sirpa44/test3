@@ -4,7 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-
+    translate.source: 'en'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -34,6 +34,10 @@ services:
         arguments:
             $path: '%kernel.project_dir%/Data/%env(csv_data)%'
 
-#    App\Adapter\JsonManager:
-#        arguments:
-#            $path: '%kernel.project_dir%/Data/%env(json_data)%'
+    App\Adapter\JsonManager:
+        arguments:
+            $path: '%kernel.project_dir%/Data/%env(json_data)%'
+
+    App\Service\Translate:
+        arguments:
+            $source: '%translate.source%'

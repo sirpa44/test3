@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-class Question
+class Question implements \JsonSerializable
 {
 
     protected $creationDate;
@@ -55,6 +55,18 @@ class Question
     public function setChoices($choices): void
     {
         $this->choices = $choices;
+    }
+
+    /**
+     * @return array|mixed
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'question' => $this->getQuestion(),
+            'createdAt' => $this->getCreationDate(),
+            'choices' => $this->getChoices(),
+        ];
     }
 
 

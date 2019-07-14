@@ -7,7 +7,7 @@ interface DataManagerInterface
     /**
      * get all the data and return an iterator
      *
-     * @return \Iterator
+     * @return array
      */
-    public function getAll(): \Iterator;
+    public function getAll(): array;
 }

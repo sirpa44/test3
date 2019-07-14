@@ -20,14 +20,37 @@ class CsvManager implements DataManagerInterface
     /**
      * get all users as Iterator
      *
-     * @return \Iterator
+     * @return array
      */
-    public function getAll():\Iterator
+    public function getAll(): array
     {
         $csv = Reader::createFromPath($this->path, 'r');
         $csv->setHeaderOffset(0);
-        $content = $csv->getIterator();
-        return $content;
+        $iterator = $csv->getIterator();
+        $questions = $this->QuestionsArray($iterator);
+        return $questions;
     }
 
+    /**
+     * create an array
+     *
+     * @param \Iterator $iterator
+     * @return array
+     */
+    public function QuestionsArray(\Iterator $iterator): array
+    {
+        $questionsArray = [];
+        foreach ($iterator as $question) {
+            $questionArray['question'] = $question['Question text'];
+            $questionArray['createdAt'] = $question['Created At'];
+            $questionArray['choices'] = [
+                'choice 1' => $question['Choice 1'],
+                'choice 2' => $question['Choice 2'],
+                'choice 3' => $question['Choice 3']];
+            $questionsArray[] = $questionArray;
+        }
+        return $questionsArray;
+    }
+
+    public function
 }
