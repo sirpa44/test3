@@ -1,0 +1,8 @@
+services:
+    App\Adapter\CsvManager:
+        arguments:
+            $path: '%kernel.project_dir%/tests/testDataFile/%env(csv_data)%'
+
+    App\Repository\QuestionRepository:
+        arguments:
+            - '@App\Adapter\CsvManager'
