@@ -27,11 +27,20 @@ class Translate
         $this->cache = $cache;
     }
 
-    public function translateSentence($sentence)
+    /**
+     * translate a sentence
+     *
+     * @param string $sentence
+     * @return string
+     * @throws \ErrorException
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    public function translateSentence(string $sentence): string
     {
         $this->translate->setSource($this->source);
         $this->translate->setTarget($this->cache->get('lang'));
-        return $sentence;
+        $translatedSentence = $this->translate->translate($sentence);
+        return $translatedSentence;
     }
 
 }

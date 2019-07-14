@@ -6,6 +6,7 @@ namespace App\Adapter;
 use App\Entity\Question;
 use League\Csv\Reader;
 use League\Csv\Writer;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CsvManager implements DataManagerInterface
 {
@@ -26,6 +27,9 @@ class CsvManager implements DataManagerInterface
      */
     public function getAll(): array
     {
+        if (!file_exists($this->path)) {
+            throw new NotFoundHttpException();
+        }
         $csv = Reader::createFromPath($this->path, 'r');
         $csv->setHeaderOffset(0);
         $iterator = $csv->getIterator();
@@ -54,6 +58,13 @@ class CsvManager implements DataManagerInterface
         return $questionsArray;
     }
 
+    /**
+     * add a new question to the Csv file.
+     *
+     * @param Question $questionEntity
+     * @return mixed|void
+     * @throws \League\Csv\CannotInsertRecord
+     */
     public function addNew(Question $questionEntity)
     {
         $csv = Writer::createFromPath($this->path, 'a');
